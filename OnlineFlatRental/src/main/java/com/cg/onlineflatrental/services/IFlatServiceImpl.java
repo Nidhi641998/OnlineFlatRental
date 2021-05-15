@@ -28,9 +28,9 @@ public class IFlatServiceImpl implements IFlatService  {
 	public Flat updateFlat(Flat flat) throws FlatNotFoundException {
 		Integer flatId=flat.getFlatId();
 		Flat flat1=iflatjpadao.findById(flatId).get();
-		flat1.setAvialibilty(flat.getAvialibilty());
+		flat1.setAvailability(flat.getAvailability());
 		flat1.setCost(flat.getCost());
-		flat1.setFlatAdress(flat.getFlatAdress());	
+		flat1.setFlatAddress(flat.getFlatAddress());	
 		return iflatjpadao.save(flat1);
 		
 	}

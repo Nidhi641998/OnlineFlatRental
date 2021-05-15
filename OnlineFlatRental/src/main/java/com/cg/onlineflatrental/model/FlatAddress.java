@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class FlatAdress {
+public class FlatAddress {
 	@Id 
 	private int addressId;
 	@Column
@@ -23,11 +23,11 @@ public class FlatAdress {
 				+ ", pin=" + pin + ", country=" + country + "]";
 	}
 
-	public FlatAdress()
+	public FlatAddress()
 	{
 		
 	}
-	public FlatAdress(int houseNo, String street, String city, String state, int pin, String country) {
+	public FlatAddress(int houseNo, String street, String city, String state, int pin, String country) {
 		super();
 		this.houseNo = houseNo;
 		this.street = street;
@@ -39,7 +39,7 @@ public class FlatAdress {
 	
 	
 
-	public FlatAdress(int addressId, int houseNo, String street, String city, String state, int pin, String country) {
+	public FlatAddress(int addressId, int houseNo, String street, String city, String state, int pin, String country) {
 		super();
 		this.addressId = addressId;
 		this.houseNo = houseNo;

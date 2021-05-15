@@ -18,27 +18,27 @@ public class Flat {
 	@Column
 	private float cost;
 	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name = "addressId")
-	private FlatAdress flatAdress;
-	private String avialibilty;
+	@JoinColumn(name = "flataddressId")
+	private FlatAddress flatAddress;
+	private String availability;
 	
 	
 	@Override
 	public String toString() {
-		return "Flat [flatId=" + flatId + ", cost=" + cost + ", flatAdress=" + flatAdress + ", avialibilty="
-				+ avialibilty + "]";
+		return "Flat [flatId=" + flatId + ", cost=" + cost + ", flatAddress=" + flatAddress + ", availability="
+				+ availability + "]";
 	}
 
 	public Flat()
 	{
 
 	}
-	public Flat(Integer flatId, float cost, FlatAdress flatAdress, String avialibilty) {
+	public Flat(Integer flatId, float cost, FlatAddress flatAddress, String availability) {
 		super();
 		this.flatId = flatId;
 		this.cost = cost;
-		this.flatAdress = flatAdress;
-		this.avialibilty = avialibilty;
+		this.flatAddress = flatAddress;
+		this.availability = availability;
 	}
 
 	public Integer getFlatId() {
@@ -57,20 +57,20 @@ public class Flat {
 		this.cost = cost;
 	}
 
-	public FlatAdress getFlatAdress() {
-		return flatAdress;
+	public FlatAddress getFlatAddress() {
+		return flatAddress;
 	}
 
-	public void setFlatAdress(FlatAdress flatAdress) {
-		this.flatAdress = flatAdress;
+	public void setFlatAddress(FlatAddress flatAddress) {
+		this.flatAddress = flatAddress;
 	}
 
-	public String getAvialibilty() {
-		return avialibilty;
+	public String getAvailability() {
+		return availability;
 	}
 
-	public void setAvialibilty(String avialibilty) {
-		this.avialibilty = avialibilty;
+	public void setAvailability(String availability) {
+		this.availability = availability;
 	}
 	
 	

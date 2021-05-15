@@ -54,5 +54,5 @@ public class IFlatController {
 	}
 }
 
-//
+
 //addflat,updateflat,deleteflat,viewflat,viewallflat/viewallflatbycost
