@@ -1,6 +1,7 @@
 package com.cg.onlineflatrental.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -18,6 +19,7 @@ public class IFlatServiceImpl implements IFlatService  {
 	@Autowired
 	private IFlatJpaDao iflatjpadao;
 	
+	String flatIdNotAvailable="flat with given id was not found";
 	@Override
 	public Flat addFlat(Flat flat) {
 		
@@ -39,19 +41,33 @@ public class IFlatServiceImpl implements IFlatService  {
 	public boolean deleteFlatById(Integer flatId) throws FlatNotFoundException {
 		
 		Flat flat=iflatjpadao.findById(flatId).get();
+		if(flat==null)
+		{
+			 throw new FlatNotFoundException(flatIdNotAvailable);
+			
+		}
+		else {
 		iflatjpadao.deleteById(flatId);
 		
-		if(null==flat)
-		{
-			return true;
+		return true;
 		}
-		return false;
 	}
 
 	@Override
 	public Flat viewFlat(Integer flatId) throws FlatNotFoundException {
 		
-		return iflatjpadao.findById(flatId).get();  
+		Optional<Flat> optional=iflatjpadao.findById(flatId);  
+		if(optional.isPresent())
+		{
+			Flat flat=optional.get();
+			return flat;
+		}
+		else
+		{
+			throw new FlatNotFoundException(flatIdNotAvailable);
+
+		}
+		
 	}
 
 	@Override
