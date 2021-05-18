@@ -85,9 +85,10 @@ public class IFlatServiceImpl implements IFlatService  {
 	}
 
 	@Override
-	public List<Flat> viewAllFlatByCost(float cost, String availability) {
+	public List<Flat> findByCostAndAvailability(float cost, String availability) {
 		// TODO Auto-generated method stub
-		return null;
+		List<Flat> flist=iflatjpadao.findByCostAndAvailability(cost,availability);
+		return flist;
 	}
 
 }

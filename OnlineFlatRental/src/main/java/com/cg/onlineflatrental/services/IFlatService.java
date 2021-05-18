@@ -13,6 +13,6 @@ public interface IFlatService {
 	boolean deleteFlatById(Integer flatId) throws FlatNotFoundException;
 	Flat viewFlat(Integer flatId) throws FlatNotFoundException;
 	List<Flat> viewAllFlat();
-	public List<Flat> viewAllFlatByCost(float cost,String availability);
+	public List<Flat> findByCostAndAvailability(float cost,String availability);
 }
 

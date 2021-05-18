@@ -54,6 +54,12 @@ public class IFlatController {
 		return new ResponseEntity("Flat deleted successfully", HttpStatus.OK);
 	}
 	
+	@GetMapping("/viewByCost/{cost}/{availability}")
+	public List<Flat> viewAllFlatByCost(@PathVariable float cost, @PathVariable String availability) 
+	{
+		return (List<Flat>)iflatservice.findByCostAndAvailability(cost,availability);
+	}
+	
 //	@ResponseBody
 	/*@ResponseStatus(value=HttpStatus.NOT_FOUND)
 	@ExceptionHandler(value = {FlatNotFoundException.class})
