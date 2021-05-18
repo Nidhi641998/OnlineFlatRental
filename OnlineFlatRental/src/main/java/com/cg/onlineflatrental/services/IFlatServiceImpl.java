@@ -28,29 +28,37 @@ public class IFlatServiceImpl implements IFlatService  {
 
 	@Override
 	public Flat updateFlat(Flat flat) throws FlatNotFoundException {
-		Integer flatId=flat.getFlatId();
-		Flat flat1=iflatjpadao.findById(flatId).get();
+		
+		Optional<Flat> optional=iflatjpadao.findById(flat.getFlatId());
+		if(optional.isPresent())
+		{
+		Flat flat1=optional.get();
 		flat1.setAvailability(flat.getAvailability());
 		flat1.setCost(flat.getCost());
 		flat1.setFlatAddress(flat.getFlatAddress());	
 		return iflatjpadao.save(flat1);
-		
+		}
+		else
+		{
+			 throw new FlatNotFoundException(flatIdNotAvailable);
+		}
 	}
 
 	@Override
 	public boolean deleteFlatById(Integer flatId) throws FlatNotFoundException {
 		
-		Flat flat=iflatjpadao.findById(flatId).get();
-		if(flat==null)
+		Optional<Flat> flat=iflatjpadao.findById(flatId);
+		if(flat.isPresent())
 		{
-			 throw new FlatNotFoundException(flatIdNotAvailable);
+			
+			iflatjpadao.deleteById(flatId);
+			return true;
 			
 		}
 		else {
-		iflatjpadao.deleteById(flatId);
-		
-		return true;
+			 throw new FlatNotFoundException(flatIdNotAvailable);
 		}
+		
 	}
 
 	@Override
