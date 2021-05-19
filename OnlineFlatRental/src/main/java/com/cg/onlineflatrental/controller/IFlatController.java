@@ -42,7 +42,7 @@ public class IFlatController {
 	}
 	
 	@PutMapping("/updateFlat")
-	public ResponseEntity updateFlat(@RequestBody Flat flat) throws FlatNotFoundException
+	public ResponseEntity updateFlat(@RequestBody Flat flat) throws FlatNotFoundException, InvalidFlatInputException
 	{
 		Flat flat1= iflatservice.updateFlat(flat);
 		return new ResponseEntity(flat1, HttpStatus.OK);

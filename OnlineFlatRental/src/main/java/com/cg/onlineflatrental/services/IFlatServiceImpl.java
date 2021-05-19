@@ -26,12 +26,13 @@ public class IFlatServiceImpl implements IFlatService  {
 		Flat flatEntity;
 		if(flat==null)
 		{
-			flatEntity=null;
+			throw new InvalidFlatInputException("Flat details cannot be null");
 		}
 		else
 		{
 		validateFlat(flat);
 		flatEntity=iflatjpadao.saveAndFlush(flat);
+		
 		}
 		return flatEntity;
 	}
@@ -39,11 +40,12 @@ public class IFlatServiceImpl implements IFlatService  {
 
 
 	@Override
-	public Flat updateFlat(Flat flat) throws FlatNotFoundException {
+	public Flat updateFlat(Flat flat) throws FlatNotFoundException, InvalidFlatInputException {
 		
 		Optional<Flat> optional=iflatjpadao.findById(flat.getFlatId());
 		if(optional.isPresent())
 		{
+		validateFlat(flat);
 		Flat flat1=optional.get();
 		flat1.setAvailability(flat.getAvailability());
 		flat1.setCost(flat.getCost());
@@ -152,7 +154,7 @@ public class IFlatServiceImpl implements IFlatService  {
 		}
 		else
 		{
-			throw new InvalidFlatInputException("Availability can be only [YES | NO | Yes | No | yes | no | Y | N | y | n");
+			throw new InvalidFlatInputException("Availability can be only [YES | NO | Yes | No | yes | no | Y | N | y | n]");
 		}
 		return flag;
 	}
@@ -180,7 +182,7 @@ public class IFlatServiceImpl implements IFlatService  {
 		}
 		else if (!street.matches("^[A-Za-z]+$"))
 		{
-			throw new InvalidFlatInputException("Country cannot contain Numbers or Special Characters");
+			throw new InvalidFlatInputException("Street cannot contain Numbers or Special Characters");
 		}
 		else
 		{
@@ -198,7 +200,7 @@ public class IFlatServiceImpl implements IFlatService  {
 		}
 		else if (!city.matches("^[a-zA-Z ]+$"))
 		{
-			throw new InvalidFlatInputException("Country cannot contain Numbers or Special Characters");
+			throw new InvalidFlatInputException("City cannot contain Numbers or Special Characters");
 		}
 		else
 		{
@@ -216,7 +218,7 @@ public class IFlatServiceImpl implements IFlatService  {
 		}
 		else if (!state.matches("^[a-zA-Z ]+$"))
 		{
-			throw new InvalidFlatInputException("Country cannot contain Numbers or Special Characters");
+			throw new InvalidFlatInputException("State cannot contain Numbers or Special Characters");
 		}
 		else
 		{

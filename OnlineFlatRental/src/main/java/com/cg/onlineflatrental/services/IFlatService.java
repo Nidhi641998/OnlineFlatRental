@@ -10,7 +10,7 @@ import com.cg.onlineflatrental.model.Flat;
 
 public interface IFlatService {
 	Flat addFlat(Flat flat) throws InvalidFlatInputException;
-	Flat updateFlat(Flat flat) throws FlatNotFoundException;
+	Flat updateFlat(Flat flat) throws FlatNotFoundException, InvalidFlatInputException;
 	boolean deleteFlatById(Integer flatId) throws FlatNotFoundException;
 	Flat viewFlat(Integer flatId) throws FlatNotFoundException;
 	List<Flat> viewAllFlat();
