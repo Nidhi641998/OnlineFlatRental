@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.cg.onlineflatrental.exception.ErrorMessage;
 import com.cg.onlineflatrental.exception.FlatNotFoundException;
+import com.cg.onlineflatrental.exception.InvalidFlatInputException;
 import com.cg.onlineflatrental.model.Flat;
 import com.cg.onlineflatrental.services.IFlatService;
 
@@ -35,7 +36,7 @@ public class IFlatController {
 	}
 
 	@PostMapping("/addFlat")
-	public Flat addFlat(@RequestBody Flat flat)
+	public Flat addFlat(@RequestBody Flat flat) throws InvalidFlatInputException
 	{
 		return iflatservice.addFlat(flat);
 	}
