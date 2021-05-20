@@ -1,4 +1,4 @@
-package com.cg.onlineflatrental.services;
+package com.cg.onlineflatrental.service;
 
 import java.util.List;
 
@@ -14,6 +14,6 @@ public interface IFlatService {
 	boolean deleteFlatById(Integer flatId) throws FlatNotFoundException;
 	Flat viewFlat(Integer flatId) throws FlatNotFoundException;
 	List<Flat> viewAllFlat();
-	public List<Flat> findByCostAndAvailability(float cost,String availability);
+	public List<Flat> findByCostAndAvailability(Float cost,String availability) throws FlatNotFoundException, InvalidFlatInputException;
 }
 

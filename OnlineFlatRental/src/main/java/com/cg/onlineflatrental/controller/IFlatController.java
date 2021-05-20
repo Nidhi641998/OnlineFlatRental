@@ -13,7 +13,7 @@ import com.cg.onlineflatrental.exception.ErrorMessage;
 import com.cg.onlineflatrental.exception.FlatNotFoundException;
 import com.cg.onlineflatrental.exception.InvalidFlatInputException;
 import com.cg.onlineflatrental.model.Flat;
-import com.cg.onlineflatrental.services.IFlatService;
+import com.cg.onlineflatrental.service.IFlatService;
 
 @RestController
 @RequestMapping("/flatbooking")
@@ -56,7 +56,7 @@ public class IFlatController {
 	}
 	
 	@GetMapping("/viewByCost/{cost}/{availability}")
-	public List<Flat> viewAllFlatByCost(@PathVariable float cost, @PathVariable String availability) 
+	public List<Flat> viewAllFlatByCost(@PathVariable Float cost, @PathVariable String availability) throws FlatNotFoundException, InvalidFlatInputException 
 	{
 		return (List<Flat>)iflatservice.findByCostAndAvailability(cost,availability);
 	}

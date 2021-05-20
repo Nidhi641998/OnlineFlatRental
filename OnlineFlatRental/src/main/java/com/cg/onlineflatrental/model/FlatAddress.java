@@ -10,13 +10,13 @@ import javax.persistence.Id;
 public class FlatAddress {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int addressId;
+	private Integer addressId;
 	@Column
-	private int houseNo;
+	private Integer houseNo;
 	private String street;
 	private String city;
 	private String state;
-	private int pin;
+	private Integer pin;
 	private String country;
 	
 	
@@ -30,7 +30,7 @@ public class FlatAddress {
 	{
 		
 	}
-	public FlatAddress(int houseNo, String street, String city, String state, int pin, String country) {
+	public FlatAddress(Integer houseNo, String street, String city, String state, Integer pin, String country) {
 		super();
 		this.houseNo = houseNo;
 		this.street = street;
@@ -42,7 +42,7 @@ public class FlatAddress {
 	
 	
 
-	public FlatAddress(int addressId, int houseNo, String street, String city, String state, int pin, String country) {
+	public FlatAddress(Integer addressId, Integer houseNo, String street, String city, String state, Integer pin, String country) {
 		super();
 		this.addressId = addressId;
 		this.houseNo = houseNo;
@@ -54,19 +54,19 @@ public class FlatAddress {
 	}
 	
 	
-	public int getAddressId() {
+	public Integer getAddressId() {
 		return addressId;
 	}
 
-	public void setAddressId(int addressId) {
+	public void setAddressId(Integer addressId) {
 		this.addressId = addressId;
 	}
 
-	public int getHouseNo() {
+	public Integer getHouseNo() {
 		return houseNo;
 	}
 
-	public void setHouseNo(int houseNo) {
+	public void setHouseNo(Integer houseNo) {
 		this.houseNo = houseNo;
 	}
 
@@ -94,11 +94,11 @@ public class FlatAddress {
 		this.state = state;
 	}
 
-	public int getPin() {
+	public Integer getPin() {
 		return pin;
 	}
 
-	public void setPin(int pin) {
+	public void setPin(Integer pin) {
 		this.pin = pin;
 	}
 

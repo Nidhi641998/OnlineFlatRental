@@ -1,4 +1,4 @@
-package com.cg.onlineflatrental.services;
+package com.cg.onlineflatrental.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,9 +32,9 @@ public class IFlatServiceImpl implements IFlatService  {
 		{
 		validateFlat(flat);
 		flatEntity=iflatjpadao.saveAndFlush(flat);
-		
-		}
 		return flatEntity;
+		}
+		
 	}
 
 
@@ -99,16 +99,25 @@ public class IFlatServiceImpl implements IFlatService  {
 	}
 
 	@Override
-	public List<Flat> findByCostAndAvailability(float cost, String availability) {
+	public List<Flat> findByCostAndAvailability(Float cost, String availability) throws FlatNotFoundException, InvalidFlatInputException {
 		// TODO Auto-generated method stub
-		List<Flat> flist=iflatjpadao.findByCostAndAvailability(cost,availability);
-		return flist;
+		List<Flat> flatlist = null;
+		if(validateFlatCost(cost) && validateFlatAvailability(availability))
+			{
+			flatlist=iflatjpadao.findByCostAndAvailability(cost,availability);
+			
+			if(flatlist.isEmpty())
+			{
+			throw new FlatNotFoundException("No Flat available for given cost");
+			}
+			}
+		return flatlist;
 	}
 	
 	public static boolean validateFlat(Flat flat) throws InvalidFlatInputException {
 		
 		boolean flag=false;
-		if(flat==null)
+		if(flat.getFlatAddress()==null || flat.getAvailability()==null )
 		{
 			throw new InvalidFlatInputException("Flat details cannot be null");
 		}
@@ -127,7 +136,7 @@ public class IFlatServiceImpl implements IFlatService  {
 		return flag;
 	}
 
-	public static boolean validateFlatCost(float cost) throws InvalidFlatInputException {
+	public static boolean validateFlatCost(Float cost) throws InvalidFlatInputException {
 		
 		boolean flag=false;
 		if(cost > 0)
@@ -136,7 +145,7 @@ public class IFlatServiceImpl implements IFlatService  {
 		}
 		else
 		{
-			throw new InvalidFlatInputException("Cost cannot be 0 or negative");
+			throw new InvalidFlatInputException("Cost cannot be empty or 0 or negative");
 		}
 		return flag;
 	}
@@ -159,7 +168,7 @@ public class IFlatServiceImpl implements IFlatService  {
 		return flag;
 	}
 
-	public static boolean validateFlatHouseNo(int houseNo) throws InvalidFlatInputException {
+	public static boolean validateFlatHouseNo(Integer houseNo) throws InvalidFlatInputException {
 	
 		boolean flag=false;
 		if(houseNo <= 0 || Integer.toString(houseNo).isEmpty() )
@@ -245,7 +254,7 @@ public class IFlatServiceImpl implements IFlatService  {
 		return flag;
 	}
 
-	public static boolean validateFlatPin(int pin) throws InvalidFlatInputException {
+	public static boolean validateFlatPin(Integer pin) throws InvalidFlatInputException {
 		
 		boolean flag=false;
 		if(pin<=0)

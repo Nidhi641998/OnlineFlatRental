@@ -1,13 +1,13 @@
 package com.cg.onlineflatrental.exception;
 
 public class ErrorMessage {
-	private int errorCode;
+	private Integer errorCode;
 	private String errorMessage;
 	
-	public int getErrorCode() {
+	public Integer getErrorCode() {
 		return errorCode;
 	}
-	public void setErrorCode(int errorCode) {
+	public void setErrorCode(Integer errorCode) {
 		this.errorCode = errorCode;
 	}
 	public String getErrorMessage() {
@@ -21,7 +21,7 @@ public class ErrorMessage {
 	public ErrorMessage() {
 		super();
 	}
-	public ErrorMessage(int errorCode, String errorMessage) {
+	public ErrorMessage(Integer errorCode, String errorMessage) {
 		super();
 		this.errorCode = errorCode;
 		this.errorMessage = errorMessage;

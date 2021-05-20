@@ -19,7 +19,7 @@ public class Flat {
 	private Integer flatId;
 	
 	@Column
-	private float cost;
+	private Float cost;
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "flataddressId")
 	private FlatAddress flatAddress;
@@ -36,7 +36,7 @@ public class Flat {
 	{
 
 	}
-	public Flat(Integer flatId, float cost, FlatAddress flatAddress, String availability) {
+	public Flat(Integer flatId, Float cost, FlatAddress flatAddress, String availability) {
 		super();
 		this.flatId = flatId;
 		this.cost = cost;
@@ -52,11 +52,11 @@ public class Flat {
 		this.flatId = flatId;
 	}
 
-	public float getCost() {
+	public Float getCost() {
 		return cost;
 	}
 
-	public void setCost(float cost) {
+	public void setCost(Float cost) {
 		this.cost = cost;
 	}
 
