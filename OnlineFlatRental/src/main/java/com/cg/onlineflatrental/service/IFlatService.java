@@ -16,4 +16,3 @@ public interface IFlatService {
 	List<Flat> viewAllFlat();
 	public List<Flat> findByCostAndAvailability(Float cost,String availability) throws FlatNotFoundException, InvalidFlatInputException;
 }
-

@@ -25,7 +25,7 @@ public class FlatAddress {
 		return "FlatAdress [houseNo=" + houseNo + ", street=" + street + ", city=" + city + ", state=" + state
 				+ ", pin=" + pin + ", country=" + country + "]";
 	}
-
+	
 	public FlatAddress()
 	{
 		

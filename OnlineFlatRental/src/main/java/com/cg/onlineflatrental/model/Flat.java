@@ -48,6 +48,14 @@ public class Flat {
 		return flatId;
 	}
 
+	
+	public Flat(Float cost, FlatAddress flatAddress, String availability) {
+		super();
+		this.cost = cost;
+		this.flatAddress = flatAddress;
+		this.availability = availability;
+	}
+
 	public void setFlatId(Integer flatId) {
 		this.flatId = flatId;
 	}
