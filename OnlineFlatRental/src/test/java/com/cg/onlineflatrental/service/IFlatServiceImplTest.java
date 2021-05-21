@@ -27,8 +27,8 @@ import com.cg.onlineflatrental.model.FlatAddress;
 @SpringBootTest
 public class IFlatServiceImplTest {
 	
-	//@MockBean
-	//IFlatJpaDao iflatjpadao;
+	@MockBean
+	IFlatJpaDao iflatjpadao;
 	
 	@Autowired
 	IFlatService iflatservice;
@@ -41,10 +41,10 @@ public class IFlatServiceImplTest {
 	{
 		flatAddress=new FlatAddress(10,"Rajajinagar","Bangalore","Karnataka",560086,"India");
 		flat=new Flat(78, (float) 20000, flatAddress,"Yes");
-		//Mockito.when(iflatjpadao.saveAndFlush(flat)).thenReturn(flat);
-        //assertThat(iflatservice.addFlat(flat)).isEqualTo(flat);
-		Flat flat1= (iflatservice.addFlat(flat));
-		assertNotNull(flat1);
+		Mockito.when(iflatjpadao.saveAndFlush(flat)).thenReturn(flat);
+        assertThat(iflatservice.addFlat(flat)).isEqualTo(flat);
+		//Flat flat1= (iflatservice.addFlat(flat));
+		//assertNotNull(flat1);
 	}
 	
 	
@@ -57,7 +57,7 @@ public class IFlatServiceImplTest {
 		try {
 			iflatservice.addFlat(flat);
 		} catch (InvalidFlatInputException exception) {
-			assertEquals("Availability cannot be empty", exception.getMessage());
+			assertEquals("Availability cannot be Empty", exception.getMessage());
 		}
 	}
 
@@ -140,8 +140,8 @@ public class IFlatServiceImplTest {
 	@Test
 	public void testAddFlat08() throws InvalidFlatInputException
 	{
-		FlatAddress flatAddress=new FlatAddress(8,"Vidyaranya Pura","","Karnataka",560780,"India");
-		Flat flat=new Flat(10, (float) 10050, flatAddress,"y");
+		FlatAddress flatAddress=new FlatAddress(8,"Vidyaranyapura","","Karnataka",560780,"India");
+		Flat flat=new Flat(10, (float) 10050, flatAddress,"yes");
 		try
 		{
 		iflatservice.addFlat(flat);
@@ -170,7 +170,7 @@ public class IFlatServiceImplTest {
 	@Test
 	public void testAddFlat10() throws InvalidFlatInputException
 	{
-		FlatAddress flatAddress=new FlatAddress(100,"Nandini Layout","Bangalore","",526700,"India");
+		FlatAddress flatAddress=new FlatAddress(100,"NandiniLayout","Bangalore","",526700,"India");
 		Flat flat=new Flat(63, (float) 7500, flatAddress,"n");
 		try
 		{
@@ -260,7 +260,7 @@ public class IFlatServiceImplTest {
 	@Test
 	public void testAddFlat16() throws InvalidFlatInputException
 	{
-		FlatAddress flatAddress=new FlatAddress(3,"Baswangudi","Sirsi","Kashmir",56-780,"India");
+		FlatAddress flatAddress=new FlatAddress(3,"Baswangudi","Sirsi","Kashmir",56780,"India");
 		Flat flat=new Flat(15, (float) 2600, flatAddress,"no");
 		try
 		{
