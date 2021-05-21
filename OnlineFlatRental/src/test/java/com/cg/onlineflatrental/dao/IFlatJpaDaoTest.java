@@ -174,7 +174,28 @@ class IFlatJpaDaoTest {
 			Flat getFromDb = iflatjpadao.findById(saveToDb.getFlatId()).get();
 			assertEquals(getFromDb, saveToDb);
 	    }
+	 @Test
+	    public void testFindByCostAndAvailability()
+	    {
 	 
+		 Flat flat=new Flat();
+		 FlatAddress flatAddress=new FlatAddress();
+		 flatAddress.setHouseNo(10);
+			flatAddress.setCity("Bangalore");
+			flatAddress.setStreet("nagpura");
+			flatAddress.setState("Karnataka");
+			flatAddress.setCountry("India");
+			flatAddress.setPin(560086);
+			
+			flat.setCost((float) 2500);
+			flat.setFlatAddress(flatAddress);
+			flat.setAvailability("Yes");
+		 
+		 Flat saveInDb =  testEntityManager.persist(flat);
+	        List<Flat> getInDb = (List<Flat>) iflatjpadao.findByCostAndAvailability( saveInDb.getCost(), saveInDb.getAvailability());
+
+	        Assert.assertEquals(getInDb.size() , 1  );
+	    }
 	
 
 }
