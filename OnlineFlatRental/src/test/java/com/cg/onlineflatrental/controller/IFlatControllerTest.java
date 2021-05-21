@@ -194,6 +194,35 @@ class IFlatControllerTest {
 	        return objectMapper.writeValueAsString(flat);
 	    }
 	        
-	   
+	   @Test
+	    public void testFindByCostAndAvailability() throws Exception{
+	        String URI= "/flatbooking/viewByCost/{cost}/{availability}";
+	        Flat flat = new Flat();
+	        FlatAddress flatAddress=new FlatAddress();
+	 		flatAddress.setHouseNo(10);
+	 			flatAddress.setCity("Bangalore");
+	 			flatAddress.setStreet("nagpura");
+	 			flatAddress.setState("Karnataka");
+	 			flatAddress.setCountry("India");
+	 			flatAddress.setPin(560086);
+	 			
+	 			flat.setCost((float) 2500);
+	 			flat.setFlatAddress(flatAddress);
+	 			flat.setAvailability("Yes");
+	        String jsonInput = this.convertToJson(flat);
+	        
+	        List<Flat> flatList = new ArrayList<>();
+	        flatList.add(flat);
+	        
+	        Mockito.when(iflatservice.findByCostAndAvailability((Mockito.any()), (Mockito.any()))).thenReturn(flatList);
+	        MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.get(URI, 2500, "Yes")
+	                .accept(MediaType.APPLICATION_JSON))
+	                .andReturn();
+	        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+	        String jsonOutput = mockHttpServletResponse.getContentAsString();
+	        System.out.println(jsonOutput);
+	     //   assertThat(jsonInput).isEqualTo(jsonOutput);
+	        assertThat(flat.getCost()).isEqualTo(2500);
+	    }
 
 }

@@ -5,6 +5,12 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.junit.Assert;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -23,12 +29,17 @@ import com.cg.onlineflatrental.exception.InvalidFlatInputException;
 import com.cg.onlineflatrental.model.Flat;
 import com.cg.onlineflatrental.model.FlatAddress;
 
+
+
 //@RunWith(SpringRunner.class)
 @SpringBootTest
 public class IFlatServiceImplTest {
 	
 	@MockBean
 	IFlatJpaDao iflatjpadao;
+	
+	@Autowired
+	IFlatJpaDao iflatjpadao1;
 	
 	@Autowired
 	IFlatService iflatservice;
@@ -288,7 +299,206 @@ public class IFlatServiceImplTest {
 		}
 	}
 	
+	
 	@Test
+	void testUpdateFlat18()  {
+		Flat flat=new Flat();
+		FlatAddress flatAddress=new FlatAddress();
+		flat.getFlatId();
+		flatAddress.setHouseNo(10);
+		flatAddress.setCity("Bangalore");
+		flatAddress.setStreet("nagpura");
+		flatAddress.setState("Karnataka");
+		flatAddress.setCountry("India");
+		flatAddress.setPin(560086);
+		
+		flat.setCost((float) 2500);
+		flat.setFlatAddress(flatAddress);
+		flat.setAvailability("Yes");
+        iflatjpadao.save(flat);
+
+       flatAddress.setPin(56008);
+        Mockito.when(iflatjpadao.save(flat)).thenReturn(flat);
+		assertEquals(flat.getFlatAddress().getPin(), 56008);
+    
+	}
+	@Test
+	void testUpdateFlat19() throws InvalidFlatInputException, FlatNotFoundException {
+		Flat flat=new Flat();
+		FlatAddress flatAddress=new FlatAddress();
+		flatAddress.setHouseNo(10);
+		flatAddress.setCity("Bangalore");
+		flatAddress.setStreet("nagpura");
+		flatAddress.setState("Karnataka");
+		flatAddress.setCountry("India");
+		flatAddress.setPin(560086);
+		flat.getFlatId();
+		flat.setCost((float) 2500);
+		flat.setFlatAddress(flatAddress);
+		flat.setAvailability("Yes");
+        iflatjpadao.save(flat);
+
+        
+        Mockito.when(iflatjpadao.save(flat)).thenReturn(flat);
+		assertEquals(flat.getAvailability(), "Yes");
+    
+		
+		
+	}
+	
+	  @Test
+	    public void testViewFlat() throws Exception{
+		  
+		  Flat flat = new Flat();
+	       FlatAddress flatAddress=new FlatAddress();
+	            flat.setFlatId(1);
+	            flatAddress.setHouseNo(10);
+				flatAddress.setCity("Bangalore");
+				flatAddress.setStreet("nagpura");
+				flatAddress.setState("Karnataka");
+				flatAddress.setCountry("India");
+				flatAddress.setPin(560086);
+				
+			//	flat.setFlatId(100);
+				flat.setCost((float) 2500);
+				flat.setFlatAddress(flatAddress);
+				flat.setAvailability("Yes");
+				
+				Mockito.when(iflatjpadao.save(flat)).thenReturn(flat);
+				assertEquals(flat.getFlatId(),1);
+	    }
+		
+	  
+	  @Test
+	    public void testViewAllFlat() throws Exception{
+		  Flat flat1=new Flat();
+			 FlatAddress flatAddress1=new FlatAddress();
+			 flatAddress1.setHouseNo(10);
+			 flatAddress1.setCity("Bangalore");
+			 flatAddress1.setStreet("nagpura");
+			 flatAddress1.setState("Karnataka");
+			 flatAddress1.setCountry("India");
+		   	 flatAddress1.setPin(560086);
+				
+			 flat1.setCost((float) 2500);
+			 flat1.setFlatAddress(flatAddress1);
+			 flat1.setAvailability("Yes");
+			 
+			 Flat flat2=new Flat();
+			 FlatAddress flatAddress2=new FlatAddress();
+			 flatAddress2.setHouseNo(150);
+			 flatAddress2.setCity("Mysore");
+			 flatAddress2.setStreet("Nandi Layout");
+			 flatAddress2.setState("Kerala");
+			 flatAddress2.setCountry("India");
+		   	 flatAddress2.setPin(460020);
+				
+			 flat2.setCost((float) 16500);
+			 flat2.setFlatAddress(flatAddress2);
+			 flat2.setAvailability("No");
+
+	        List<Flat> ticketList = new ArrayList<>();
+	        ticketList.add(flat1);
+	        ticketList.add(flat2);
+
+	        Mockito.when(iflatjpadao.findAll()).thenReturn(ticketList);
+	        assertThat(iflatjpadao.findAll()).isEqualTo(ticketList);
+	    }
+	  
+	  @Test
+	    public void testDeleteFlat() throws Exception{
+		  Flat flat = new Flat();
+	       FlatAddress flatAddress=new FlatAddress();
+	       		flat.setFlatId(3); 
+	       		flat.getFlatId();
+	       		flatAddress.setHouseNo(10);
+				flatAddress.setCity("Bangalore");
+				flatAddress.setStreet("nagpura");
+				flatAddress.setState("Karnataka");
+				flatAddress.setCountry("India");
+				flatAddress.setPin(560086);
+				
+				//flat.setFlatId(100);
+				flat.setCost((float) 2500);
+				flat.setFlatAddress(flatAddress);
+				flat.setAvailability("Yes");
+
+				Mockito.when(iflatjpadao.save(flat)).thenReturn(flat);
+				iflatjpadao.deleteById(flat.getFlatId());
+				assertNotEquals(flat, new Flat());
+	    }
+	  
+	  @Test
+		void testViewAllFlatByCost01() throws InvalidFlatInputException, FlatNotFoundException {
+
+			try {
+				iflatservice.findByCostAndAvailability((float)0,"Yes");
+			} catch (InvalidFlatInputException exception) {
+				assertEquals("Cost cannot be empty or 0 or negative", exception.getMessage());
+			}
+		}
+	  
+	  @Test
+		void testViewAllFlatByCost02() throws InvalidFlatInputException, FlatNotFoundException {
+
+			try {
+				iflatservice.findByCostAndAvailability((float)3200, "available");
+			} catch (InvalidFlatInputException exception) {
+				assertEquals("Availability can be only [YES | NO | Yes | No | yes | no | Y | N | y | n]", exception.getMessage());
+			}
+		}
+
+		@Test
+		void testViewAllFlatByCost03() throws InvalidFlatInputException, FlatNotFoundException {
+
+			try {
+				iflatservice.findByCostAndAvailability((float)3200, "");
+			} catch (InvalidFlatInputException exception) {
+				assertEquals("Availability cannot be Empty", exception.getMessage());
+			}
+		}
+
+		@Test
+		void testViewAllFlatByCost04() throws InvalidFlatInputException, FlatNotFoundException {
+
+			try {
+
+				assertNotNull(iflatservice.findByCostAndAvailability((float)3200, "Yes"));
+			} catch (FlatNotFoundException exception) {
+				assertEquals("No Flat available for given cost", exception.getMessage());
+			}
+		}
+
+		@Test
+		void testViewAllFlat1() {
+			try {
+				assertNull(iflatservice.viewAllFlat());
+			} catch (AssertionFailedError exception) {
+				assertNotNull(iflatservice.viewAllFlat());
+			}
+
+		}
+		
+		@Test
+		void testDeleteFlat1() throws FlatNotFoundException {
+			try {
+				assertNull(iflatservice.deleteFlatById(26));
+			} catch (FlatNotFoundException exception) {
+				assertEquals("flat with given id was not found", exception.getMessage());
+			}
+		}
+
+		@Test
+		void testViewFlat01() throws FlatNotFoundException {
+			try {
+				assertEquals(1200, iflatservice.viewFlat(26).getCost());
+			} catch (FlatNotFoundException exception) {
+				assertEquals("flat with given id was not found", exception.getMessage());
+			}
+		}
+
+		/*
+		 * @Test
 	void testUpdateFlat02() throws InvalidFlatInputException, FlatNotFoundException {
 		flatAddress = new FlatAddress(1, "street", "city", "state", 600001, "country");
 		flat = new Flat(1, 3456.0f, flatAddress, "");
@@ -554,52 +764,8 @@ public class IFlatServiceImplTest {
 			assertEquals("flat with given id was not found", exception.getMessage());
 		}
 	}
-	@Test
-	void testUpdateFlat18()  {
-		Flat flat=new Flat();
-		FlatAddress flatAddress=new FlatAddress();
-		flat.getFlatId();
-		flatAddress.setHouseNo(10);
-		flatAddress.setCity("Bangalore");
-		flatAddress.setStreet("nagpura");
-		flatAddress.setState("Karnataka");
-		flatAddress.setCountry("India");
-		flatAddress.setPin(560086);
-		
-		flat.setCost((float) 2500);
-		flat.setFlatAddress(flatAddress);
-		flat.setAvailability("Yes");
-        iflatjpadao.save(flat);
+		 */
 
-       flatAddress.setPin(56008);
-        Mockito.when(iflatjpadao.save(flat)).thenReturn(flat);
-		assertEquals(flat.getFlatAddress().getPin(), 56008);
-    
-	}
-	@Test
-	void testUpdateFlat19() throws InvalidFlatInputException, FlatNotFoundException {
-		Flat flat=new Flat();
-		FlatAddress flatAddress=new FlatAddress();
-		flatAddress.setHouseNo(10);
-		flatAddress.setCity("Bangalore");
-		flatAddress.setStreet("nagpura");
-		flatAddress.setState("Karnataka");
-		flatAddress.setCountry("India");
-		flatAddress.setPin(560086);
-		flat.getFlatId();
-		flat.setCost((float) 2500);
-		flat.setFlatAddress(flatAddress);
-		flat.setAvailability("Yes");
-        iflatjpadao.save(flat);
-
-        
-        Mockito.when(iflatjpadao.save(flat)).thenReturn(flat);
-		assertEquals(flat.getAvailability(), "Yes");
-    
-		
-		
-	}
-		
 
 }
 

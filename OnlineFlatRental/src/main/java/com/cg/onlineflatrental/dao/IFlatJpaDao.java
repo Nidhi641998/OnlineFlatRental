@@ -14,6 +14,8 @@ import com.cg.onlineflatrental.model.Flat;
 public interface IFlatJpaDao extends JpaRepository<Flat, Integer>{
 	@Query("select f from Flat f where f.cost <= ?1 AND f.availability = ?2")
 	List<Flat> findByCostAndAvailability(Float cost, String availability);
+
+	
 	
 	//@Query("select f from Flat f where f.flatCost = ?1 and f.flatAvailability = ?2")
 	
