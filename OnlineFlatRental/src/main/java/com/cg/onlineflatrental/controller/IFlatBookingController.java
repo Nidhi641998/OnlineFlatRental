@@ -22,7 +22,7 @@ import com.cg.onlineflatrental.exception.InvalidFlatInputException;
 import com.cg.onlineflatrental.service.IFlatBookingService;
 
 @RestController
-@RequestMapping("/api/ofr")
+@RequestMapping("/flatbooking")
 public class IFlatBookingController {
 	private static final Logger logger = LoggerFactory.getLogger(IFlatBookingController.class);
 	
@@ -37,7 +37,7 @@ public class IFlatBookingController {
 	
 
 
-	@PostMapping("/addFlat1")
+	@PostMapping("/addFlatBooking")
     public FlatBooking addFlatBooking1(@RequestBody FlatBooking flatBooking) throws InvalidFlatInputException
     {
 		logger.info("===In Post Controller===");
@@ -58,7 +58,7 @@ public class IFlatBookingController {
 	
 	
 	
-	@PutMapping("/updateFlat")
+	@PutMapping("/updateFlatBooking")
 	public ResponseEntity updateFlat(@RequestBody FlatBooking flatbooking) throws FlatBookingNotFoundException
 	{
 		logger.info("===In Put Controller===");
@@ -76,7 +76,7 @@ public class IFlatBookingController {
 	
 	
 	
-	@DeleteMapping("/deleteFlat/{bookingNo}")
+	@DeleteMapping("/deleteFlatBooking/{bookingNo}")
 	public  ResponseEntity deleteFlatById(@PathVariable Integer bookingNo) throws FlatBookingNotFoundException
 	{
 		logger.info("===In Delete Controller===");
@@ -93,7 +93,7 @@ public class IFlatBookingController {
 	
 	
 	
-	@GetMapping("/viewAllFlat/{bookingNo}")
+	@GetMapping("/viewAllFlatBooking/{bookingNo}")
 	public ResponseEntity viewFlat(@PathVariable("bookingNo") int bookingNo) throws FlatBookingNotFoundException
 	{
 		logger.info("===In Get Controller===");
@@ -103,15 +103,7 @@ public class IFlatBookingController {
 		logger.info("viewFlat() controller has executed");
 		return new ResponseEntity(flatbooking, HttpStatus.OK);
 	}
-	
-	
-	
-	
-	
-	
-	
-
-	@GetMapping("/view-all-flatBookings")
+	@GetMapping("/viewAllFlatBooking")
 	public List<FlatBooking> viewAllFlatBooking() {
 		logger.info("===In Get Controller===");
 		logger.info("viewAllFlatBooking URL is opened");
@@ -122,3 +114,46 @@ public class IFlatBookingController {
 
 	    
 }
+
+	
+	/*
+	 *  {
+        "bookingNo": 20,
+        "flat": {
+            "flatId": 100,
+            "cost": 325555,
+            "flatAddress": {
+                "id": 21,
+                "houseNo": 14,
+                "street": "RamaPuraRoad",
+                "city": "DeogharA",
+                "state": "Jharkhand",
+                "pin": 110002,
+                "country": "India"
+            },
+            "availability": "yes"
+        },
+        "tenant": {
+            "tenantId": 21,
+            "tenantName": "AmitKumarGupta",
+            "tenantAge": 22,
+            "flatAddress": {
+                "id": 15,
+                "houseNo": 16,
+                "street": "RKMVRoadA",
+                "city": "Deoghar",
+                "state": "Jharkahnd",
+                "pin": 841460,
+                "country": "India"
+            }
+        },
+        "bookingFromDate": "2016-11-01",
+        "bookingToDate": "2016-11-06"
+    }*/	
+	 
+	
+	
+	
+	
+	
+	

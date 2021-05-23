@@ -12,8 +12,11 @@ public interface IUserService {
 	public User validateUser(String username,String password) throws UserNotFoundException;
 	public User addUser(User user);								//
 	public User updateUser(User user);
-//	public User updatePassword(User user,String newpass);
+//	public User updatePassword(User user, String newpass) ;
+
 	public User updatePassword(Integer userId,String newpass);
 
-	public void removeUser(Integer userId);						//
+//	public void removeUser(Integer userId);						//
+	public boolean removeUser(Integer userId) throws UserNotFoundException;
+	
 }

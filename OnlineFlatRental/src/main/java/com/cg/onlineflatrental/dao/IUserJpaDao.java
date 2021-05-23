@@ -11,8 +11,11 @@ import com.cg.onlineflatrental.model.*;
 public interface IUserJpaDao extends JpaRepository<User,Integer> {
 //	@Query("select u from User u where u.userName=userName and u.password=password ")
 //	User validateUser(String userName,String password);
+	
 	@Query("SELECT u FROM User u WHERE u.userName=?1 AND u.password=?2")
 	User validateUser(String username,String password);
+	
+	
 
 
 

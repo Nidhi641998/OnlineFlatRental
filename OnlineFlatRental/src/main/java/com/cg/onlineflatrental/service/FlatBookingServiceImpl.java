@@ -396,21 +396,5 @@ public static boolean validateFlatBookingAvailability(String availability) throw
 	logger.info("validateFlatAvailability() has executed");
 	return flag;
 }
-	
-
-
-	
-
-	
-	
-
-	
 
 }
-
-	
-
-	
-	
-
-

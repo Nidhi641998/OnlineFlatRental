@@ -51,20 +51,28 @@ public class Landlord {
 		this.landlordAge = landlordAge;
 	}
 
-	public Flat getflat() {
+	/*public Flat getflat() {
 		return flat;
 	}
 
 	public void setflatList(Flat flat) {
 		this.flat = flat;
-	}
+	}*/
 	
+	public Flat getFlat() {
+		return flat;
+	}
+
+	public void setFlat(Flat flat) {
+		this.flat = flat;
+	}
+
 	public Landlord() {
 		super();
 
 	}
 	public Landlord(Integer landlordId, String landlordName, Integer landlordAge, Flat flat) {
-		super();
+		//super();
 		this.landlordId = landlordId;
 		this.landlordName = landlordName;
 		this.landlordAge = landlordAge;
