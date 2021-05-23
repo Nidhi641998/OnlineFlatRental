@@ -23,7 +23,7 @@ import com.cg.onlineflatrental.service.ITenantService;
 
 
 @RestController
-@RequestMapping("/Tenant")
+@RequestMapping("/flatbooking")
 public class ITenantController {
 
 	final Logger LOGGER= LoggerFactory.getLogger(this.getClass());

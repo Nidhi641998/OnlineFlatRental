@@ -21,7 +21,7 @@ import com.cg.onlineflatrental.model.Landlord;
 import com.cg.onlineflatrental.service.ILandlordService;
 
 @RestController
-@RequestMapping("/landlord")
+@RequestMapping("/flatbooking")
 public class ILandlordController {
 	private static final Logger logger = LoggerFactory.getLogger(ILandlordController.class);
 

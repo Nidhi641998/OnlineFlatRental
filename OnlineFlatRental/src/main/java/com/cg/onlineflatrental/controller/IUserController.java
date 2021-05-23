@@ -23,7 +23,7 @@ import com.cg.onlineflatrental.model.*;
 import com.cg.onlineflatrental.service.IUserService;
 
 @RestController 
-@RequestMapping("/api")
+@RequestMapping("/flatbooking")
 public class IUserController { 
 	Logger logger=LoggerFactory.getLogger(IUserController.class);
 	@Autowired 

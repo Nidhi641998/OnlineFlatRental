@@ -54,7 +54,6 @@ public class Landlord {
 	/*public Flat getflat() {
 		return flat;
 	}
-
 	public void setflatList(Flat flat) {
 		this.flat = flat;
 	}*/
