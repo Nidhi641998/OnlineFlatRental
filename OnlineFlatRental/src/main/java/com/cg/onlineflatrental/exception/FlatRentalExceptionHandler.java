@@ -34,5 +34,7 @@ public class FlatRentalExceptionHandler {
 		return new ResponseEntity(ex.getMessage(),HttpStatus.BAD_REQUEST);
 		
 	}
+	
+	
 }
 

@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.validation.*;
 //import javax.validation.constraints.Digits;
 //import javax.validation.constraints.Size;
+import javax.validation.constraints.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,12 +47,15 @@ public class User {
 	@Column(name="user_id")
 	private Integer userId;
 	
+	@Pattern(regexp="[a-zA-Z]{1}[a-zA-Z0-9]+",message="Username should have only alphabets & digits")
 	@Column(name="user_name", nullable=false)
 	private String userName;
 	
+	@Pattern(regexp="[[\\w][\\W]]+")
 	@Column(name="password", nullable=true)
 	private String password;
 	
+	@Pattern(regexp="[a-zA-Z]+")
 	@Column(name="user_type", nullable=true)
 	private String userType;
 	

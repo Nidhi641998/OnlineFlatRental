@@ -30,12 +30,6 @@ public class IFlatBookingController {
 	@Autowired
 	private IFlatBookingService flatBookingService;
 	
-	
-	
-	
-	
-	
-
 
 	@PostMapping("/addFlatBooking")
     public FlatBooking addFlatBooking1(@RequestBody FlatBooking flatBooking) throws InvalidFlatInputException
@@ -45,18 +39,6 @@ public class IFlatBookingController {
 		logger.info("addFlatBooking1() controller is initiated");
         return flatBookingService.addFlatBooking1(flatBooking);
     }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	@PutMapping("/updateFlatBooking")
 	public ResponseEntity updateFlat(@RequestBody FlatBooking flatbooking) throws FlatBookingNotFoundException
@@ -68,14 +50,7 @@ public class IFlatBookingController {
 		logger.info("updateFlat() controller has executed");
 		return new ResponseEntity(flat1, HttpStatus.OK);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 	@DeleteMapping("/deleteFlatBooking/{bookingNo}")
 	public  ResponseEntity deleteFlatById(@PathVariable Integer bookingNo) throws FlatBookingNotFoundException
 	{
@@ -86,12 +61,6 @@ public class IFlatBookingController {
 		logger.info("deleteFlatBookingbyId() controller has executed");
 		return new ResponseEntity("Flat deleted successfully", HttpStatus.OK);
 	}
-	
-	
-	
-	
-	
-	
 	
 	@GetMapping("/viewAllFlatBooking/{bookingNo}")
 	public ResponseEntity viewFlat(@PathVariable("bookingNo") int bookingNo) throws FlatBookingNotFoundException
@@ -117,7 +86,10 @@ public class IFlatBookingController {
 
 	
 	/*
-	 *  {
+	  
+	 
+	 FlatBooking:
+	   {
         "bookingNo": 20,
         "flat": {
             "flatId": 100,
@@ -149,7 +121,69 @@ public class IFlatBookingController {
         },
         "bookingFromDate": "2016-11-01",
         "bookingToDate": "2016-11-06"
-    }*/	
+    }
+    
+    
+    Flat:
+    {
+        "flatId": 6,
+        "cost": 25600,
+        "flatAddress": {
+            "addressId": 5,
+            "houseNo": 100,
+            "street": "Kormangala",
+            "city": "Bangalore",
+            "state": "Karnataka",
+            "pin": 560200,
+            "country": "India"
+        },
+        "availability": "Yes"
+    }
+    
+    
+    Tenant:
+    { "tenantId":11,
+		"tenantName": "Sourabha",
+		"tenantAge":19,
+		"flatAddress": {
+            "addressId":11,
+            "houseNo": 102,
+            "street": "Main Road",
+            "city": "Mumbai",
+            "state": "Maharastra",
+            "pin": 645872,
+            "country": "India"
+        }
+        }
+        
+        User:
+        {
+  "userName":"iamakash",
+  "password":"mypass",
+  "userType":"landlord"
+}
+
+		Landlord:
+		 {
+        "landlordId": 8,
+        "landlordName": "Nidhi",
+        "landlordAge": 23,
+        "flat": {
+            "flatId": 2,
+            "cost": 325555,
+            "flatAddress": {
+                "addressId": 1,
+                "houseNo": 14,
+                "street": "RamaPuraRoad",
+                "city": "DeogharA",
+                "state": "Karnataka",
+                "pin": 110002,
+                "country": "India"
+            },
+            "availability": "No"
+        }
+    }
+    */	
 	 
 	
 	

@@ -46,7 +46,7 @@ class IUserControllerTest {
 
 	@Test
 	void testAddUser() throws Exception {
-		String URI="/api/addUser";
+		String URI="/flatbooking/addUser";
 		User user=new User();
 		user.setUserName("aps");
 		user.setPassword("asp");
@@ -64,7 +64,7 @@ class IUserControllerTest {
 	
 	@Test
 	void testViewUser() throws Exception {
-		String URI="/api/viewUser/{userId}";
+		String URI="/flatbooking/viewUser/{userId}";
 		User user=new User();
 		user.setUserName("aps");
 		user.setPassword("asp");
@@ -80,7 +80,7 @@ class IUserControllerTest {
 	
 	@Test
 	void testViewAllUser() throws Exception {
-		String URI="/api/viewAllUser";
+		String URI="/flatbooking/viewAllUser";
 		
 		User user1=new User();
 		user1.setUserName("aps");
@@ -107,7 +107,7 @@ class IUserControllerTest {
 	
 	@Test
 	void testRemoveUser() throws Exception {
-		String URI="/api/removeUser/{userId}";
+		String URI="/flatbooking/removeUser/{userId}";
 		User user=new User();
 		user.setUserId(11);
 		user.setUserName("aps");
@@ -125,7 +125,7 @@ class IUserControllerTest {
 	
 	@Test
 	void testUpdateUser() throws Exception {
-		String URI="/api/updateUser";
+		String URI="/flatbooking/updateUser";
 		User user=new User();
 		user.setUserName("apsaps");
 		user.setPassword("aspasp");
@@ -143,7 +143,7 @@ class IUserControllerTest {
 	
 	@Test
 	void testValidateUser() throws Exception {
-		String URI="/api/validateUser/{userName}/{password}";
+		String URI="/flatbooking/validateUser/{userName}/{password}";
 		User user=new User();
 		//user.setUserId(11);
 		user.setUserName("apsaps");

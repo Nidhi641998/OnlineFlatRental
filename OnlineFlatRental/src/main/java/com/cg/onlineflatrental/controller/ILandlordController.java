@@ -81,3 +81,21 @@ public class ILandlordController {
 }
 
 //addLandlord,updateLandlord,deleteLandlord,viewLandlord,viewallLandlord 
+
+/*{
+  	"landlordId": 10,
+"landlordName": "Vijeta Choudhary",
+"landlordAge": 22,
+"flat": {
+    "cost": 10,
+    "flatAddress": {
+        "houseNo": 100,
+        "street": "Kormangala",
+        "city": "Bangalore",
+        "state": "TamilNadu",
+        "pin": 760200,
+        "country": "India"
+    },
+    "availability": "Yes"
+}
+}*/
