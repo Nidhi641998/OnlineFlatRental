@@ -10,10 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cg.onlineflatrental.dao.IFlatAddressJpaDao;
 import com.cg.onlineflatrental.dao.IFlatJpaDao;
+import com.cg.onlineflatrental.dto.FlatDto;
 import com.cg.onlineflatrental.exception.FlatNotFoundException;
 import com.cg.onlineflatrental.exception.InvalidFlatInputException;
 import com.cg.onlineflatrental.model.Flat;
+import com.cg.onlineflatrental.model.FlatAddress;
 
 @Service
 @Transactional
@@ -23,6 +26,9 @@ public class IFlatServiceImpl implements IFlatService  {
 	
 	@Autowired
 	private IFlatJpaDao iflatjpadao;
+	
+	@Autowired
+	private IFlatAddressJpaDao iflataddressjpadao;
 	
 	String flatIdNotAvailable="flat with given id was not found";
 	@Override
@@ -136,9 +142,33 @@ public class IFlatServiceImpl implements IFlatService  {
 		return flatlist;
 	}
 	
+	public void addFlat1(FlatDto flat) {
+		
+		Flat flat1 = new Flat();
+		flat1.setFlatId(flat.getFlatId());
+		flat1.setAvailability(flat.getAvailability());
+		flat1.setCost(flat.getCost());
+		// Business segment object
+		
+		FlatAddress flatAddress = findByAddressId(flat.getFlat_address());
+		//System.out.println("busi segment = "+segment.getBus_seg_id()+" "+segment.getBus_seg_name()); 
+		flat1.setFlatAddress(flatAddress); 
+		iflatjpadao.save(flat1);	
+		
+		
+	}
+	
+	
+	public FlatAddress findByAddressId(Integer addressId) {
+		FlatAddress address = iflataddressjpadao.findById(addressId).get();
+		return address;
+	}
+
+	
 	public static boolean validateFlat(Flat flat) throws InvalidFlatInputException {
 		logger.info("validateFlat() is initiated");	
 		boolean flag=false;
+		System.out.println(flat);
 		if(flat.getFlatAddress()==null || flat.getAvailability()==null )
 		{
 			logger.error("Flat details cannot be null");

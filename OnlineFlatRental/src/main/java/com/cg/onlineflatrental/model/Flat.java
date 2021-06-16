@@ -15,20 +15,22 @@ import javax.persistence.Table;
 public class Flat {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	//@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer flatId;
 	
 	@Column
 	private Float cost;
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name = "flataddressId")
+	@OneToOne(targetEntity=com.cg.onlineflatrental.model.FlatAddress.class, cascade=CascadeType.ALL)
+	
+	@JoinColumn(name = "flataddressId",referencedColumnName="addressId")
 	private FlatAddress flatAddress;
 	private String availability;
-	
+//	@OneToOne(targetEntity=com.insurance.quote.entity.BusinessSegment.class, cascade=CascadeType.ALL)
+//	@JoinColumn(name="bus_seg_id",referencedColumnName="bus_seg_id")
 	
 	@Override
 	public String toString() {
-		return "Flat [flatId=" + flatId + ", cost=" + cost + ", flatAddress=" + flatAddress + ", availability="
+		return "Flat [flatId=" + flatId + ", cost=" + cost + ", flatAddress= " + flatAddress + ", availability="
 				+ availability + "]";
 	}
 

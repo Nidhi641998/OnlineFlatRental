@@ -11,13 +11,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.cg.onlineflatrental.dao.IFlatAddressJpaDao;
+import com.cg.onlineflatrental.dao.IFlatJpaDao;
+import com.cg.onlineflatrental.dto.FlatDto;
 import com.cg.onlineflatrental.exception.ErrorMessage;
 import com.cg.onlineflatrental.exception.FlatNotFoundException;
 import com.cg.onlineflatrental.exception.InvalidFlatInputException;
 import com.cg.onlineflatrental.model.Flat;
+import com.cg.onlineflatrental.model.FlatAddress;
 import com.cg.onlineflatrental.service.IFlatService;
 
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/flatbooking")
 public class IFlatController {
@@ -25,6 +30,9 @@ public class IFlatController {
 	private static final Logger logger = LoggerFactory.getLogger(IFlatController.class);
 	@Autowired
 	private IFlatService iflatservice;
+	
+	@Autowired
+	private IFlatAddressJpaDao iflataddressjpadao;
 	
 	@GetMapping("/viewAllFlat")
 	public List<Flat> viewAllFlat()
@@ -89,6 +97,31 @@ public class IFlatController {
 		List<Flat> flatList=iflatservice.findByCostAndAvailability(cost,availability);
 		logger.info("viewAllFlatByCost() controller has executed");
 		return flatList;	
+	}
+	
+	@PostMapping("/addFlatAddress")
+	public FlatAddress addFlatAddress(@RequestBody FlatAddress flatAddress) 
+	{
+		logger.info("===In Post Controller===");
+		logger.info("addFlat URL is opened");
+		logger.info("addFlat() controller is initiated");
+		return iflataddressjpadao.save(flatAddress);
+		//logger.info("addFlat() controller has executed");
+		
+		
+	}
+	
+	@PostMapping("/addFlat1")
+	public ResponseEntity<String> addFlat1(@RequestBody FlatDto flat) 
+	{
+		logger.info("===In Post Controller===");
+		logger.info("addFlat URL is opened");
+		logger.info("addFlat() controller is initiated");
+		 iflatservice.addFlat1(flat);
+		logger.info("addFlat() controller has executed");
+		return new ResponseEntity<String>(HttpStatus.OK);
+
+		
 	}
 	
 //	@ResponseBody
