@@ -1,6 +1,7 @@
 package com.cg.onlineflatrental.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,6 +34,9 @@ public class IFlatController {
 	
 	@Autowired
 	private IFlatAddressJpaDao iflataddressjpadao;
+	
+	@Autowired
+	private IFlatJpaDao iflatjpadao;
 	
 	@GetMapping("/viewAllFlat")
 	public List<Flat> viewAllFlat()
@@ -112,16 +116,68 @@ public class IFlatController {
 	}
 	
 	@PostMapping("/addFlat1")
-	public ResponseEntity<String> addFlat1(@RequestBody FlatDto flat) 
+	public ResponseEntity addFlat1(@RequestBody FlatDto flat) 
 	{
 		logger.info("===In Post Controller===");
 		logger.info("addFlat URL is opened");
 		logger.info("addFlat() controller is initiated");
 		 iflatservice.addFlat1(flat);
 		logger.info("addFlat() controller has executed");
-		return new ResponseEntity<String>(HttpStatus.OK);
+		return new ResponseEntity(flat,HttpStatus.OK);
+	
+	}
+	
+	@PutMapping("/updateFlatAddress")
+	public ResponseEntity updateFlatAddress(@RequestBody FlatAddress flatAddress) 
+	{
+		logger.info("===In Put Controller===");
+		logger.info("updateFlatAddress URL is opened");
+		logger.info("updateFlatAddress() controller is initiated");
+		FlatAddress flatAddress1=iflataddressjpadao.findById(flatAddress.getAddressId()).get();
 
+		flatAddress1.setHouseNo(flatAddress.getHouseNo());
+		flatAddress1.setStreet(flatAddress.getStreet());
+		flatAddress1.setCity(flatAddress.getCity());
+		flatAddress1.setState(flatAddress.getState());
+		flatAddress1.setPin(flatAddress.getPin());
+		flatAddress1.setCountry(flatAddress.getCountry());
+		iflataddressjpadao.save(flatAddress1);
+		//logger.info("addFlat() controller has executed");
 		
+		
+		return new ResponseEntity(flatAddress1,HttpStatus.OK);
+		
+	}
+	
+	@PutMapping("/updateFlat1")
+	public ResponseEntity updateFlat1(@RequestBody FlatDto flat)
+	{
+		Flat flat1=iflatjpadao.findById(flat.getFlatId()).get();
+		flat1.setCost(flat.getCost());
+		flat1.setAvailability(flat.getAvailability());
+		
+		FlatAddress flatAddress = findByAddressId(flat.getFlat_address());
+		flat1.setFlatAddress(flatAddress); 
+		iflatjpadao.save(flat1);
+		
+		return new ResponseEntity(flat1,HttpStatus.OK);
+	}
+	
+	
+	public FlatAddress findByAddressId(Integer addressId) {
+		FlatAddress address = iflataddressjpadao.findById(addressId).get();
+		return address;
+	}
+	
+	@GetMapping("/viewAllFlatAddress/{addressId}")
+	public ResponseEntity viewFlatAddress(@PathVariable("addressId") Integer addressId) throws FlatNotFoundException
+	{
+		logger.info("===In Get Controller===");
+		logger.info("viewAllFlatAddress/{addressId} URL is opened");
+		logger.info("viewFlatAddress() controller is initiated");
+		FlatAddress flatAddress=iflataddressjpadao.findById(addressId).get();
+		logger.info("viewFlaAddresst() controller has executed");
+		return new ResponseEntity(flatAddress, HttpStatus.OK);
 	}
 	
 //	@ResponseBody
