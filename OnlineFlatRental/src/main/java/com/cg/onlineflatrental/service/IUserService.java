@@ -11,7 +11,7 @@ public interface IUserService {
 	public List<User> viewAllUser();							//
 	public User validateUser(String username,String password) throws UserNotFoundException;
 	public User addUser(User user);								//
-	public User updateUser(User user);
+	//public User updateUser(User user);
 //	public User updatePassword(User user, String newpass) ;
 
 	public User updatePassword(Integer userId,String newpass);

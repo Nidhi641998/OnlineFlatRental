@@ -61,6 +61,7 @@ public class IUserServiceImpl implements IUserService{
 			return user1;
 		}
 		else {
+			logger.info("In Service...");
 			throw new UserNotFoundException("Failed to validate the user!");
 		}
 	}
@@ -71,28 +72,28 @@ public class IUserServiceImpl implements IUserService{
 		return onlineFlatRentalJpaDao.save(user);
 	}
 
-	@Override
-	public User updateUser(User user) {
-/*		Optional<User> optional=onlineFlatRentalJpaDao.findById(user.getUserId());
-		User user1=new User();
-		if(optional.isPresent()) {
-			user1.setUserId(user.getUserId());
-			user1.setUserName(user.getUserName());
-			user1.setUserType(user.getUserType());
-			user1.setPassword(user.getPassword());
-		}
-		return onlineFlatRentalJpaDao.save(user1);
-	*/	Optional<User> optional=onlineFlatRentalJpaDao.findById(user.getUserId());
-		logger.info("In Service....updateUser() started...");
-		User user1=optional.get();
-		if(user.getUserName()!=null) {
-		user1.setUserName(user.getUserName());
-		}
-		if(user.getUserType()!=null) {
-		user1.setUserType(user.getUserType());
-		}
-		return onlineFlatRentalJpaDao.save(user1);
-	}		
+//	@Override
+//	public User updateUser(User user) {
+///*		Optional<User> optional=onlineFlatRentalJpaDao.findById(user.getUserId());
+//		User user1=new User();
+//		if(optional.isPresent()) {
+//			user1.setUserId(user.getUserId());
+//			user1.setUserName(user.getUserName());
+//			user1.setUserType(user.getUserType());
+//			user1.setPassword(user.getPassword());
+//		}
+//		return onlineFlatRentalJpaDao.save(user1);
+//	*/	Optional<User> optional=onlineFlatRentalJpaDao.findById(user.getUserId());
+//		logger.info("In Service....updateUser() started...");
+//		User user1=optional.get();
+//		if(user.getUserName()!=null) {
+//		user1.setUserName(user.getUserName());
+//		}
+//		if(user.getUserType()!=null) {
+//		user1.setUserType(user.getUserType());
+//		}
+//		return onlineFlatRentalJpaDao.save(user1);
+//	}		
 
 	/*@Override
 	public User updatePassword(User user, String newpass) {

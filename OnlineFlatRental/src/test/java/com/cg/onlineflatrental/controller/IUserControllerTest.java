@@ -123,23 +123,23 @@ class IUserControllerTest {
 		
 	}
 	
-	@Test
-	void testUpdateUser() throws Exception {
-		String URI="/flatbooking/updateUser";
-		User user=new User();
-		user.setUserName("apsaps");
-		user.setPassword("aspasp");
-		user.setUserType("landlord");
-		String jsonInput = this.convertToJson(user);
-		Mockito.when(iUserService.updateUser(Mockito.any())).thenReturn(user);
-		MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.put(URI).accept(MediaType.APPLICATION_JSON).content(jsonInput).contentType(MediaType.APPLICATION_JSON))
-                .andReturn();
-	        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
-	        String jsonOutput = mockHttpServletResponse.getContentAsString();
-
-	        assertThat(jsonInput.substring(0,3)).isEqualTo(jsonOutput.substring(0,3));
-
-	}
+//	@Test
+//	void testUpdateUser() throws Exception {
+//		String URI="/flatbooking/updateUser";
+//		User user=new User();
+//		user.setUserName("apsaps");
+//		user.setPassword("aspasp");
+//		user.setUserType("landlord");
+//		String jsonInput = this.convertToJson(user);
+//		Mockito.when(iUserService.updateUser(Mockito.any())).thenReturn(user);
+//		MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.put(URI).accept(MediaType.APPLICATION_JSON).content(jsonInput).contentType(MediaType.APPLICATION_JSON))
+//                .andReturn();
+//	        MockHttpServletResponse mockHttpServletResponse = mvcResult.getResponse();
+//	        String jsonOutput = mockHttpServletResponse.getContentAsString();
+//
+//	        assertThat(jsonInput.substring(0,3)).isEqualTo(jsonOutput.substring(0,3));
+//
+//	}
 	
 	@Test
 	void testValidateUser() throws Exception {

@@ -19,14 +19,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.onlineflatrental.dao.IUserJpaDao;
+//import com.cg.onlineflatrental.dao.OnlineFlatRentalJpaDao;
 import com.cg.onlineflatrental.exception.UserNotFoundException;
 import com.cg.onlineflatrental.model.*;
-import com.cg.onlineflatrental.service.IUserService;
+//import com.cg.onlineflatrental.services.IUserService;
+import com.cg.onlineflatrental.service.*;
+
+//import net.javaguides.springboot.exception.ResourceNotFoundException;
+//import net.javaguides.springboot.model.Employee;
 
 @CrossOrigin(origins = "*")
 @RestController 
 @RequestMapping("/flatbooking")
 public class IUserController { 
+	//Added for update service
+	@Autowired
+	private IUserJpaDao onlineFlatRentalJpaDao;
 	Logger logger=LoggerFactory.getLogger(IUserController.class);
 	@Autowired 
 	private IUserService iUserService;
@@ -85,11 +94,13 @@ public class IUserController {
 		
 	}
 	
-	@GetMapping("validateUser/{userName}/{password}")
+	@GetMapping("/validateUser/{userName}/{password}")
 	public ResponseEntity validateUser(@PathVariable String userName,@PathVariable String password) throws UserNotFoundException {
-		iUserService.validateUser(userName, password);
+		User user=iUserService.validateUser(userName, password);
 		logger.info("In controller.....validateUser() started");
-		return new ResponseEntity("User Validation Completed Succesfully!",HttpStatus.OK);
+		//return new ResponseEntity("User Validation Completed Succesfully!",HttpStatus.OK);
+		return ResponseEntity.ok(user);
+
 	} 
 	
 	
@@ -102,11 +113,27 @@ public class IUserController {
 		return	iUserService.updateUser(users);
 		//return iUserService.updateUser(userName,userType);
 	}*/
-	@PutMapping("/updateUser")
+	
+/*Commented for update service
+ * 	@PutMapping("/updateUser")
 	public User updateUser(@RequestBody User users){
 		User user1=iUserService.updateUser(users);
 		logger.info("In controller.....updateUser() started");
 		return user1; 
+	}		*/
+	
+	@PutMapping("/updateUser/{userId}")
+	public ResponseEntity<User> updateUser(@PathVariable Integer userId, @RequestBody User userDetails) throws UserNotFoundException{
+		User user = onlineFlatRentalJpaDao.findById(userId)
+				.orElseThrow(() -> new UserNotFoundException("Employee not exist with id :" + userId));
+		//Added this extra line
+		user.setUserId(userId);
+		user.setUserName(userDetails.getUserName());
+		user.setPassword(userDetails.getPassword());
+		user.setUserType(userDetails.getUserType());
+		
+		User updatedUser = onlineFlatRentalJpaDao.save(user);
+		return ResponseEntity.ok(updatedUser);
 	}
 
 }
