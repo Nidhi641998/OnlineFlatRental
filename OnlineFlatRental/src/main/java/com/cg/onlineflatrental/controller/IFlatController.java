@@ -93,7 +93,7 @@ public class IFlatController {
 	}
 	
 	@GetMapping("/viewByCost/{cost}/{availability}")
-	public List<Flat> viewAllFlatByCost(@PathVariable Float cost, @PathVariable String availability) throws FlatNotFoundException, InvalidFlatInputException 
+	public List<Flat> findByCostAndAvailability(@PathVariable Float cost, @PathVariable String availability) throws FlatNotFoundException, InvalidFlatInputException 
 	{
 		logger.info("===In Delete Controller===");
 		logger.info("viewByCost/{cost}/{availability} URL is opened");

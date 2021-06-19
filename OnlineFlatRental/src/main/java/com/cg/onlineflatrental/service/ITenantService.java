@@ -2,6 +2,7 @@ package com.cg.onlineflatrental.service;
 
 import java.util.List;
 
+import com.cg.onlineflatrental.dto.TenantDto;
 import com.cg.onlineflatrental.exception.TenantNotFoundException;
 import com.cg.onlineflatrental.model.Tenant;
 
@@ -18,7 +19,16 @@ public interface ITenantService {
 
 	public Boolean deleteTenant(int tenantId)throws TenantNotFoundException;
 
-	public Tenant validateTenat(int tenantId);
+	//public Tenant validateTenant(String tenantName)throws TenantNotFoundException;
+
+	public Tenant validateTenant(int tenantId)throws TenantNotFoundException;
+
+	public void addTenant1(TenantDto tenant);
+		// TODO Auto-generated method stub
+		
+	
+
+	
 }
 
 

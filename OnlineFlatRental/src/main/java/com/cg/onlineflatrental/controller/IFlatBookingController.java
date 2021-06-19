@@ -16,17 +16,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.cg.onlineflatrental.model.Flat;
+import com.cg.onlineflatrental.model.FlatAddress;
 import com.cg.onlineflatrental.model.FlatBooking;
+import com.cg.onlineflatrental.model.Tenant;
+import com.cg.onlineflatrental.dao.IFlatAddressJpaDao;
+import com.cg.onlineflatrental.dao.IFlatBookingJpaDao;
+import com.cg.onlineflatrental.dao.IFlatJpaDao;
+import com.cg.onlineflatrental.dao.ITenantDao;
+import com.cg.onlineflatrental.dto.FlatBookingDto;
+import com.cg.onlineflatrental.dto.TenantDto;
 import com.cg.onlineflatrental.exception.FlatBookingNotFoundException;
 import com.cg.onlineflatrental.exception.InvalidFlatInputException;
 
 import com.cg.onlineflatrental.service.IFlatBookingService;
-
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/flatbooking")
 public class IFlatBookingController {
 	private static final Logger logger = LoggerFactory.getLogger(IFlatBookingController.class);
+	
+	
+	@Autowired
+	private IFlatBookingJpaDao iflatjpadao;
+	
+	@Autowired
+	private IFlatAddressJpaDao iflataddressjpadao;
+	
+	@Autowired
+	private IFlatJpaDao iflatjpa;
+	
+	@Autowired
+	private ITenantDao itenantjpa;
 	
 
 	@Autowired
@@ -54,7 +76,7 @@ public class IFlatBookingController {
 	}
 
 	@DeleteMapping("/deleteFlatBooking/{bookingNo}")
-	public  ResponseEntity deleteFlatById(@PathVariable Integer bookingNo) throws FlatBookingNotFoundException
+	public  ResponseEntity deleteFlatBookingbyId(@PathVariable Integer bookingNo) throws FlatBookingNotFoundException
 	{
 		logger.info("===In Delete Controller===");
 		logger.info("deleteFlat/{bookingNo} URL is opened");
@@ -65,7 +87,7 @@ public class IFlatBookingController {
 	}
 	
 	@GetMapping("/viewAllFlatBooking/{bookingNo}")
-	public ResponseEntity viewFlat(@PathVariable("bookingNo") int bookingNo) throws FlatBookingNotFoundException
+	public ResponseEntity viewFlatBooking(@PathVariable("bookingNo") int bookingNo) throws FlatBookingNotFoundException
 	{
 		logger.info("===In Get Controller===");
 		logger.info("/viewAllFlat/{bookingNo} URL is opened");
@@ -81,6 +103,91 @@ public class IFlatBookingController {
 		logger.info("viewAllFlatBooking() controller is initiated");
 		return (List<FlatBooking>) flatBookingService.viewAllFlatBooking();
 	}
+	
+	@PostMapping("/addFlatBooking2")
+	public ResponseEntity addFlatBooking2(@RequestBody FlatBookingDto flatBooking) 
+	{
+		logger.info("===In Post Controller===");
+		logger.info("addFlat URL is opened");
+		logger.info("addFlat() controller is initiated");
+		flatBookingService.addFlatBooking2(flatBooking);
+		logger.info("addFlat() controller has executed");
+		return new ResponseEntity(flatBooking,HttpStatus.OK);
+
+		
+	}
+	
+	@PutMapping("/updateFlatBooking1")
+	public ResponseEntity updateFlatBooking1(@RequestBody FlatBookingDto flatBooking)
+	{
+		FlatBooking flatBooking1=iflatjpadao.findById(flatBooking.getBookingNo()).get();
+		flatBooking1.setBookingFromDate(flatBooking.getBookingFromDate());
+        flatBooking1.setBookingToDate(flatBooking.getBookingToDate());
+        
+        Flat flat = findByFlatId(flatBooking.getFlat());
+        flatBooking1.setFlat(flat);
+        
+        Tenant tenant = findByTenantId(flatBooking.getTenant());
+        flatBooking1.setTenant(tenant);
+        
+        iflatjpadao.save(flatBooking1);
+        return new ResponseEntity(flatBooking1,HttpStatus.OK);
+		
+		
+	}
+	public Tenant findByTenantId(Integer tenantId) {
+    	Tenant address1 = itenantjpa.findById(tenantId).get();
+        return address1;
+    }
+    public Flat findByFlatId(Integer flatId) {
+    	Flat address = iflatjpa.findById(flatId).get();
+        return address;
+    }
+	
+	
+	
+	
+	
+	/*public void addFlatBooking2(FlatBookingDto flatBooking) {
+	       
+        FlatBooking flatBooking1 = new FlatBooking();
+        flatBooking1.setBookingNo(flatBooking.getBookingNo());
+        flatBooking1.setBookingFromDate(flatBooking.getBookingFromDate());
+        flatBooking1.setBookingToDate(flatBooking.getBookingToDate());
+        
+        Flat flat = findByFlatId(flatBooking.getFlat());
+        flatBooking1.setFlat(flat);
+        
+        Tenant tenant = findByTenantId(flatBooking.getTenant());
+        flatBooking1.setTenant(tenant);
+        
+        iflatjpadao.save(flatBooking1);
+		
+       
+       
+    }
+	public Flat findByflatId(Integer flatId) {
+		Flat address2 = iflatjpa.findById(flatId).get();
+		return address2;
+	}
+	
+	
+	
+	
+	public FlatAddress findByAddressId(Integer addressId) {
+		FlatAddress address2 = iflataddressjpadao.findById(addressId).get();
+		return address2;
+	}
+   
+   
+    public Tenant findByTenantId(Integer tenantId) {
+    	Tenant address1 = itenantjpa.findById(tenantId).get();
+        return address1;
+    }
+    public Flat findByFlatId(Integer flatId) {
+    	Flat address = iflatjpa.findById(flatId).get();
+        return address;
+    }*/
 	
 
 	    

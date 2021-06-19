@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,11 +16,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.onlineflatrental.dao.IFlatJpaDao;
+import com.cg.onlineflatrental.dao.ILandlordJpaDao;
+import com.cg.onlineflatrental.dto.FlatDto;
+import com.cg.onlineflatrental.dto.LandlordDto;
 import com.cg.onlineflatrental.exception.InvalidLandlordInputException;
 import com.cg.onlineflatrental.exception.LandlordNotFoundException;
+import com.cg.onlineflatrental.model.Flat;
+import com.cg.onlineflatrental.model.FlatAddress;
 import com.cg.onlineflatrental.model.Landlord;
 import com.cg.onlineflatrental.service.ILandlordService;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/flatbooking")
 public class ILandlordController {
@@ -27,6 +35,12 @@ public class ILandlordController {
 
 	@Autowired
 	private ILandlordService ilandlordservice;
+	
+	@Autowired
+	private ILandlordJpaDao ilandlordjpadao;
+	
+	@Autowired
+	private IFlatJpaDao iflatjpadao;
 
 	@GetMapping("/viewAllLandlord") 
 	public List<Landlord> viewAllLandlord() 
@@ -77,6 +91,45 @@ public class ILandlordController {
 		ilandlordservice.deleteLandlordById(landlordId);
 		logger.info("deleteLandlordById() controller has executed");
 		return  new ResponseEntity("Landlord deleted successfully", HttpStatus.OK);
+	}
+	
+	@PostMapping("/addLandlord1")
+	public ResponseEntity addLandlord1(@RequestBody LandlordDto landlord) {
+		
+		Landlord landlord1 = new Landlord();
+		landlord1.setLandlordId(landlord.getLandlordId());
+		landlord1.setLandlordName(landlord.getLandlordName());
+		landlord1.setLandlordAge(landlord.getLandlordAge());
+		// Business segment object
+		
+		Flat flat = findByFlatId(landlord.getFlat());
+		//System.out.println("busi segment = "+segment.getBus_seg_id()+" "+segment.getBus_seg_name()); 
+		landlord1.setFlat(flat); 
+		ilandlordjpadao.save(landlord1);	
+		return  new ResponseEntity(landlord1, HttpStatus.OK);
+		
+		
+	}
+	
+	
+	public Flat findByFlatId(Integer flatId) {
+		Flat flat = iflatjpadao.findById(flatId).get();
+		return flat;
+	}
+	
+	@PutMapping("/updateLandlord1")
+	public ResponseEntity updateLandlord1(@RequestBody LandlordDto landlord)
+	{
+		Landlord landlord1=ilandlordjpadao.findById(landlord.getLandlordId()).get();
+		landlord1.setLandlordName(landlord.getLandlordName());
+		landlord1.setLandlordAge(landlord.getLandlordAge());
+		// Business segment object
+		
+		Flat flat = findByFlatId(landlord.getFlat());
+		//System.out.println("busi segment = "+segment.getBus_seg_id()+" "+segment.getBus_seg_name()); 
+		landlord1.setFlat(flat); 
+		ilandlordjpadao.save(landlord1);	
+		return  new ResponseEntity(landlord1, HttpStatus.OK);
 	}
 }
 

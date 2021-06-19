@@ -33,7 +33,7 @@ import javax.persistence.Table;
 @Table(name = "FlatBooking")
 public class FlatBooking {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	//@GeneratedValue(strategy = GenerationType.AUTO)
 	private int	bookingNo;
 	//@Column
 	@OneToOne(cascade=CascadeType.ALL)

@@ -10,8 +10,16 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cg.onlineflatrental.dao.IFlatAddressJpaDao;
 import com.cg.onlineflatrental.dao.IFlatBookingJpaDao;
+import com.cg.onlineflatrental.dao.IFlatJpaDao;
+import com.cg.onlineflatrental.dao.ITenantDao;
+import com.cg.onlineflatrental.dto.FlatBookingDto;
+import com.cg.onlineflatrental.dto.FlatDto;
+import com.cg.onlineflatrental.model.Flat;
+import com.cg.onlineflatrental.model.FlatAddress;
 import com.cg.onlineflatrental.model.FlatBooking;
+import com.cg.onlineflatrental.model.Tenant;
 import com.cg.onlineflatrental.exception.FlatBookingNotFoundException;
 import com.cg.onlineflatrental.exception.InvalidFlatInputException;
 
@@ -25,6 +33,15 @@ public class FlatBookingServiceImpl implements IFlatBookingService{
 	
 	@Autowired
 	private IFlatBookingJpaDao iflatjpadao;
+	
+	@Autowired
+	private IFlatAddressJpaDao iflataddressjpadao;
+	
+	@Autowired
+	private IFlatJpaDao iflatjpa;
+	
+	@Autowired
+	private ITenantDao itenantjpa;
 	
 	String flatIdNotAvailable="flat with given id was not found";
 	
@@ -173,7 +190,47 @@ public class FlatBookingServiceImpl implements IFlatBookingService{
 		logger.info("viewAllFlatBooking() service has executed");
 		return iflatjpadao.findAll();
 	}
+	@Override
+	public void addFlatBooking2(FlatBookingDto flatBooking) {
+	       
+        FlatBooking flatBooking1 = new FlatBooking();
+        flatBooking1.setBookingNo(flatBooking.getBookingNo());
+        flatBooking1.setBookingFromDate(flatBooking.getBookingFromDate());
+        flatBooking1.setBookingToDate(flatBooking.getBookingToDate());
+        
+        Flat flat = findByFlatId(flatBooking.getFlat());
+        flatBooking1.setFlat(flat);
+        
+        Tenant tenant = findByTenantId(flatBooking.getTenant());
+        flatBooking1.setTenant(tenant);
+        
+        iflatjpadao.save(flatBooking1);
+		
+       
+       
+    }
+	public Flat findByflatId(Integer flatId) {
+		Flat address2 = iflatjpa.findById(flatId).get();
+		return address2;
+	}
 	
+	
+	
+	
+	public FlatAddress findByAddressId(Integer addressId) {
+		FlatAddress address2 = iflataddressjpadao.findById(addressId).get();
+		return address2;
+	}
+   
+   
+    public Tenant findByTenantId(Integer tenantId) {
+    	Tenant address1 = itenantjpa.findById(tenantId).get();
+        return address1;
+    }
+    public Flat findByFlatId(Integer flatId) {
+    	Flat address = iflatjpa.findById(flatId).get();
+        return address;
+    }
 	
 	
 	

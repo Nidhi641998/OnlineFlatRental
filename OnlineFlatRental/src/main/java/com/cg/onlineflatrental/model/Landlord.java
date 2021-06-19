@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class Landlord {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	//@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer landlordId;
 	
 	@Column
